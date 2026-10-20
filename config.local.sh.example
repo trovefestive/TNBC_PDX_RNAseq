@@ -1,0 +1,6 @@
+# config.local.sh — YOUR cluster settings. Copy this file to config.local.sh and edit.
+#   cp config.local.sh.example config.local.sh
+# config.local.sh is listed in .gitignore, so it never ends up on GitHub.
+# sbatch reads these two environment variables automatically.
+export SBATCH_ACCOUNT=your_allocation_name
+export SBATCH_PARTITION=standard

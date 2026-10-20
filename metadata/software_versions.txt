@@ -1,0 +1,21 @@
+# Software versions (written by scripts/setup_env.slurm on 2026-10-19)
+conda env: tnbc-download
+sra-tools (prefetch):     3.4.1
+sra-tools (fasterq-dump): 3.4.1
+pigz:                     2.8
+wget (system):            1.19.5
+curl (system):            8.23.0
+md5sum (system):          8.30
+
+# conda env tnbc-r (scripts/setup_env_r.slurm, 2026-10-20)
+R: 4.4.3 
+DESeq2: 1.46.0
+apeglm: 1.28.0
+tximport: 1.34.0
+fgsea: 1.32.2
+ggplot2: 4.0.3
+ggrepel: 0.9.8
+pheatmap: 1.0.13
+patchwork: 1.3.2
+data.table: 1.18.6.1
+matrixStats: 1.5.0
