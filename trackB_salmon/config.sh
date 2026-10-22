@@ -24,3 +24,8 @@ export REF_DIR="data/ref"
 export GENCODE_HUMAN="50"           # human GENCODE release (GRCh38)
 export GENCODE_MOUSE="M39"          # mouse GENCODE release (GRCm39)
 export SALMON_INDEX="${REF_DIR}/salmon_hs${GENCODE_HUMAN}_mm${GENCODE_MOUSE}_ercc_k31"
+
+# --- Samples and outputs for steps 05-08 -------------------------------------
+export SAMPLES="../metadata/pdx_samples.tsv"   # 53 PDX models; array task N = data row N
+export FASTQC_DIR="qc/fastqc"
+export QUANT_DIR="quant"                       # quant/<model>/quant.sf

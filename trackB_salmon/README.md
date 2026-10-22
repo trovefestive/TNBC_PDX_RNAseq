@@ -13,7 +13,10 @@ first, which provides the SLURM account and the FASTQ folder.
 | once | `scripts/submit.sh scripts/setup_env_rnaseq.slurm` | conda env `tnbc-rnaseq`: salmon, fastqc, multiqc, cutadapt |
 | 03 | `scripts/submit.sh scripts/03_download_refs.slurm` | GENCODE human v50 and mouse vM39 transcripts, genomes and GTFs (md5-checked), plus ERCC92 |
 | 04 | `scripts/submit.sh scripts/04_build_salmon_index.slurm` | gentrome + decoys + tx2gene → Salmon index (16 CPU / 128 GB / a few h) |
-| 05+ | (to write) | FastQC/MultiQC, `salmon quant` array, tximport → human genes, DESeq2 as in Track A |
+| 05 | `scripts/submit.sh --array=1-53%10 scripts/05_fastqc.slurm` | FastQC per model (check adapter content) |
+| 06 | `scripts/submit.sh --array=1-53%6 scripts/06_salmon_quant.slurm` | `salmon quant -l A --validateMappings --seqBias --gcBias` per model → `quant/<model>/` |
+| 07 | `scripts/submit.sh scripts/07_multiqc.slurm` | MultiQC report of FastQC + Salmon → `qc/multiqc_report.html` |
+| 08+ | (to write) | tximport → human genes only, per-model human/mouse/ERCC fractions, DESeq2 + GSEA as in Track A, concordance with Track A |
 
 Run 03 and the env job at the same time, then 04 once both have finished:
 
@@ -26,4 +29,4 @@ scripts/submit.sh --dependency=afterok:$a:$b scripts/04_build_salmon_index.slurm
 Logs go to `logs/`, references to `data/ref/` (not tracked by git), and tool versions to
 `metadata/software_versions.txt`.
 
-Status: scripts written, not run yet.
+Status: steps 03–04 submitted (2026-10-22); 05–07 written.

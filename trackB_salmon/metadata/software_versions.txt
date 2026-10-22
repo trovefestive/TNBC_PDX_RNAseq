@@ -1,0 +1,6 @@
+
+# conda env tnbc-rnaseq (scripts/setup_env_rnaseq.slurm, 2026-10-22)
+salmon:   2.8.0
+fastqc:   v0.13.0
+multiqc:  1.35
+cutadapt: 5.2
