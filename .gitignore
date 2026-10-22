@@ -22,6 +22,12 @@
 !results/trackA/plots/
 !results/trackA/plots/*.png
 !results/trackA/plots/*.pdf
+!teaching_deseq2/
+!teaching_deseq2/README.md
+!teaching_deseq2/*.R
+!teaching_deseq2/*.Rproj
+!teaching_deseq2/data/
+!teaching_deseq2/data/*
 !trackB_salmon/
 !trackB_salmon/README.md
 !trackB_salmon/config.sh

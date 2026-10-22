@@ -137,6 +137,7 @@ Figures are in [`results/trackA/plots/`](results/trackA/plots/) and tables in [`
 │   ├── 12_deseq2_trackA.R        QC, DESeq2, sensitivity analyses, plots
 │   ├── 13_gsea_trackA.R          fgsea (GO BP, Reactome, WikiPathways, Hallmark)
 │   └── run_R.slurm               runs any R script as a SLURM job
+├── teaching_deseq2/              self-contained RStudio exercise: DESeq2 TNBC vs non-TNBC for students
 ├── metadata/                     run sheet, PDX sample sheet, download checks, software versions
 ├── results/trackA/               DE tables, GSEA tables, QC tables, figures
 └── trackB_salmon/                Track B: Salmon reprocessing (own config, scripts and README)
@@ -169,6 +170,13 @@ scripts/submit.sh scripts/run_R.slurm scripts/13_gsea_trackA.R
 [`docs/download_guide.md`](docs/download_guide.md) explains each download step, how to monitor jobs, and how to
 recover from failures. Tool versions are recorded in
 [`metadata/software_versions.txt`](metadata/software_versions.txt).
+
+## Teaching material
+
+[`teaching_deseq2/`](teaching_deseq2/) is a stand-alone RStudio project for undergraduates. It contains the count
+matrix (52 models × 25,143 genes) and a sample sheet, both built by `scripts/14_make_teaching_files.R`. A commented
+DESeq2 script runs TNBC vs non-TNBC from reading the data through PCA, DESeq2, shrinkage, volcano plot and heatmap,
+and ends with exercises. It reproduces the Track A result: 1,572 DE genes, ESR1 log2FC −4.19.
 
 ## Data and citation
 
