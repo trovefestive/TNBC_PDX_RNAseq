@@ -87,7 +87,12 @@ msg("Step 3: tximport (transcripts -> genes)")
 files <- setNames(samples$quant, samples$model)
 txi <- tximport(files, type = "salmon", tx2gene = tx2gene[, .(tx_id, gene_id)], countsFromAbundance = "no")
 
-genes <- unique(tx2gene[, .(gene_id, gene_name, gene_type, species)])
+# One row per gene. The FASTA header gives a biotype per TRANSCRIPT, so a gene
+# gets "protein_coding" if any of its transcripts is, else its most common type.
+genes <- tx2gene[, .(gene_name = gene_name[1], species = species[1],
+                     gene_type = if (any(gene_type == "protein_coding")) "protein_coding"
+                                 else names(which.max(table(gene_type)))), by = gene_id]
+stopifnot(!anyDuplicated(genes$gene_id))
 human_ids <- intersect(rownames(txi$counts), genes[species == "human", gene_id])
 txi_h <- txi
 for (slot in c("abundance", "counts", "length")) txi_h[[slot]] <- txi[[slot]][human_ids, ]

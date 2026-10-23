@@ -36,6 +36,15 @@
 !trackB_salmon/metadata/
 !trackB_salmon/metadata/*.txt
 !trackB_salmon/metadata/*.tsv
+!trackB_salmon/results/
+!trackB_salmon/results/de/
+!trackB_salmon/results/de/*.tsv
+!trackB_salmon/results/gsea/
+!trackB_salmon/results/gsea/*.tsv
+!trackB_salmon/results/qc/
+!trackB_salmon/results/qc/*
+!trackB_salmon/results/plots/
+!trackB_salmon/results/plots/*
 # never track site settings, data, logs, R session info (contains local paths)
 *sessionInfo*
 *.rds

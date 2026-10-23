@@ -1,0 +1,3 @@
+analysis	n_sig	main_sig_reproduced	main_sig_same_sign_pct	spearman_all
+drop HiSeq2500	2384	1950	100	0.979
+drop BCM-3807 (= Track A's 52 models)	2336	2063	100	0.987

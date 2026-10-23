@@ -16,7 +16,9 @@ first, which provides the SLURM account and the FASTQ folder.
 | 05 | `scripts/submit.sh --array=1-53%10 scripts/05_fastqc.slurm` | FastQC per model (check adapter content) |
 | 06 | `scripts/submit.sh --array=1-53%6 scripts/06_salmon_quant.slurm` | `salmon quant -l A --validateMappings --seqBias --gcBias` per model → `quant/<model>/` |
 | 07 | `scripts/submit.sh scripts/07_multiqc.slurm` | MultiQC report of FastQC + Salmon → `qc/multiqc_report.html` |
-| 08+ | (to write) | tximport → human genes only, per-model human/mouse/ERCC fractions, DESeq2 + GSEA as in Track A, concordance with Track A |
+| 08 | `scripts/submit.sh scripts/run_R.slurm scripts/08_import_salmon.R` | Per-model human/mouse/ERCC shares; tximport → human genes only; flags genes with mouse-identical transcripts |
+| 09 | `scripts/submit.sh scripts/run_R.slurm scripts/09_deseq2_trackB.R` | DESeq2 `~ instrument + group` (all 53 models); sensitivity checks; concordance with Track A |
+| 10 | `scripts/submit.sh scripts/run_R.slurm scripts/10_gsea_trackB.R` | fgsea: GO BP, Reactome, WikiPathways, Hallmark |
 
 Run 03 and the env job at the same time, then 04 once both have finished:
 
@@ -29,4 +31,4 @@ scripts/submit.sh --dependency=afterok:$a:$b scripts/04_build_salmon_index.slurm
 Logs go to `logs/`, references to `data/ref/` (not tracked by git), and tool versions to
 `metadata/software_versions.txt`.
 
-Status: steps 03–04 submitted (2026-10-22); 05–07 written.
+Status (2026-10-23): all steps done. Results are summarised in the main README; tables and figures are in `results/`.

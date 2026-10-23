@@ -37,7 +37,7 @@ Two independent quantification tracks feed the same downstream analysis:
 | Track | Input | Human/mouse separation | Status |
 |---|---|---|---|
 | **A** (`scripts/1*`) | Authors' RSEM expected counts deposited on GEO | Xenome (authors) | QC, DE and GSEA done |
-| **B** (`trackB_salmon/`) | Our FASTQ download | One Salmon index with human GENCODE v50 + mouse GENCODE vM39 + ERCC, with both genomes as decoys | Scripts ready |
+| **B** (`trackB_salmon/`) | Our FASTQ download | One Salmon index with human GENCODE v50 + mouse GENCODE vM39 + ERCC, with both genomes as decoys | Quantification, DE, GSEA and concordance done |
 
 The downstream steps are the same for both tracks:
 
@@ -54,12 +54,15 @@ The downstream steps are the same for both tracks:
    Exploratory contrasts: TNBC vs ER+ and TNBC vs HER2+.
 4. **GSEA.** fgsea on the DESeq2 Wald statistic against MSigDB 2026.2 GO Biological Process, Reactome and
    WikiPathways. Hallmark sets serve as a positive control.
-5. **Track A vs Track B concordance** (planned).
+5. **Track A vs Track B concordance.** Fold-change and NES correlation, plus overlap of significant genes and
+   pathways.
 
 **Sign convention:** every log2 fold change and NES is **TNBC − non-TNBC**, so positive means higher in TNBC. Each
 result file states this in its header. As a guard, the DE script stops unless ESR1 comes out lower in TNBC.
 
-## Results so far (Track A)
+## Results so far
+
+### Track A: authors' counts
 
 | | |
 |---|---|
@@ -110,6 +113,35 @@ Full tables are in [`results/trackA/gsea/`](results/trackA/gsea/).
 
 Figures are in [`results/trackA/plots/`](results/trackA/plots/) and tables in [`results/trackA/`](results/trackA/).
 
+### Track B: Salmon reprocessing of all 53 models
+
+| | |
+|---|---|
+| Quantification | 53 of 53 models. Library type is unstranded (IU); BCM-3807 runs as single-end. Median 70% of reads mapped. |
+| Species split | Mouse (stroma) share is a median 8% of mapped reads in TNBC and 10% in non-TNBC. The difference is not significant after adjusting for sequencer (p = 0.65), so it is not used as a covariate. |
+| ERCC spike-ins | Essentially absent (median < 0.1% of reads), so they are not usable for QC. |
+| Models analysed | 39 TNBC vs 14 non-TNBC. BCM-3807 is included: Salmon assigned it 125 M human counts. |
+| Genes tested | 46,750 GENCODE human genes |
+| Positive control | ESR1 log2FC = −4.3 |
+| DE genes (FDR < 0.05) | **2,139** (982 higher, 1,157 lower in TNBC). 2,055 remain after removing 84 "sporadic" genes (detected in < 50% of models in both groups; their raw fold changes are unreliable, and apeglm shrinks them to ~0). |
+| Robustness | Dropping the HiSeq 2500 batch or BCM-3807 gives ρ = 0.98–0.99, and 100% of main DE genes keep the same direction. |
+| Top genes | The 17q12 ERBB2 amplicon again (STARD3, ERBB2, ORMDL3, MIEN1, PGAP3, MED1, CDK12), plus ANKRD30A and MUC6 lower in TNBC |
+
+**Agreement with Track A.** The two tracks used different read assignment (Xenome vs a joint Salmon index) and
+different annotation (RefSeq vs GENCODE). 17,842 genes are matched by name between the two tables.
+
+| | |
+|---|---|
+| log2FC correlation | Pearson 0.89, Spearman 0.91 |
+| Significant-gene overlap | 72.5% of Track A DE genes are also significant in Track B. All 988 genes significant in both have the same direction. |
+| GSEA NES correlation | GO BP 0.86, Reactome 0.88, WikiPathways 0.87, Hallmark 0.97. All gene sets significant in both tracks have the same direction. |
+
+Track B reproduces the Track A pathway picture:
+- **Higher in TNBC:** EMT (NES 2.58), E2F targets (2.54), G2M checkpoint (2.49), MYC targets.
+- **Lower in TNBC:** estrogen response early (−2.56) and late (−2.48).
+
+Track B tables and figures are in [`trackB_salmon/results/`](trackB_salmon/results/).
+
 ### Caveats
 
 - **Sequencer is partly confounded with subtype.** The HiSeq 2500 batch contains only TNBC, so the subtype effect is
@@ -140,7 +172,7 @@ Figures are in [`results/trackA/plots/`](results/trackA/plots/) and tables in [`
 ├── teaching_deseq2/              self-contained RStudio exercise: DESeq2 TNBC vs non-TNBC for students
 ├── metadata/                     run sheet, PDX sample sheet, download checks, software versions
 ├── results/trackA/               DE tables, GSEA tables, QC tables, figures
-└── trackB_salmon/                Track B: Salmon reprocessing (own config, scripts and README)
+└── trackB_salmon/                Track B: Salmon reprocessing (own config, scripts, README and results)
 ```
 
 Raw FASTQs, reference files, intermediate matrices, logs and site settings are excluded by `.gitignore`.
