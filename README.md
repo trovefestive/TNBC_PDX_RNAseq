@@ -78,10 +78,10 @@ reproduces (FDR < 0.05) or matches in direction.
 | Analysis | TNBC vs non-TNBC | DE genes | Main DE genes reproduced | Same direction | Spearman ρ (all genes) |
 |---|---|---|---|---|---|
 | Drop HiSeq 2500 batch | 29 v 14 | 1,773 | 1,475 | 100% | 0.98 |
-| No sequencer covariate | 38 v 14 | 3,247 | 1,283 | 99.3% | 0.81 |
-| HiSeq 2000 only | 21 v 7 | 324 | 267 | 96.7% | 0.78 |
-| NovaSeq 6000 only | 8 v 7 | 1,204 | 584 | 97.7% | 0.74 |
-| Include BCM-3807 | 39 v 14 | 1,497 | 1,440 | 100% | 0.99 |
+| No sequencer covariate | 38 v 14 | 3,249 | 1,283 | 99.3% | 0.81 |
+| HiSeq 2000 only | 21 v 7 | 325 | 268 | 96.7% | 0.78 |
+| NovaSeq 6000 only | 8 v 7 | 1,203 | 583 | 97.7% | 0.74 |
+| Include BCM-3807 | 39 v 14 | 1,498 | 1,440 | 100% | 0.99 |
 
 The top DE genes lower in TNBC are the **17q12 ERBB2 amplicon** (ERBB2, MIEN1, STARD3, PGAP3, ORMDL3, MED1), which
 reflects the HER2+ models in the comparator.
@@ -90,22 +90,22 @@ reflects the HER2+ models in the comparator.
 
 | Collection | Gene sets significant | Higher in TNBC | Lower in TNBC |
 |---|---|---|---|
-| GO Biological Process | 243 | 173 | 70 |
-| Reactome | 101 | 80 | 21 |
-| WikiPathways | 49 | 43 | 6 |
-| Hallmark (control) | 22 | 16 | 6 |
+| GO Biological Process | 228 | 164 | 64 |
+| Reactome | 96 | 77 | 19 |
+| WikiPathways | 45 | 39 | 6 |
+| Hallmark (control) | 20 | 14 | 6 |
 
-- **Positive control passes:** estrogen response is strongly lower in TNBC. Hallmark early: NES −2.46,
-  padj 3e−14. Late: NES −2.33, padj 6e−12.
+- **Positive control passes:** estrogen response is strongly lower in TNBC. Hallmark early: NES −2.45,
+  padj 5e−14. Late: NES −2.33, padj 1e−11.
 - **Higher in TNBC:**
   - proliferation (Hallmark E2F targets, G2M checkpoint, MYC targets V1/V2; WikiPathways retinoblastoma gene in
     cancer);
-  - epithelial–mesenchymal transition (Hallmark NES 2.56);
+  - epithelial–mesenchymal transition (Hallmark NES 2.53);
   - collagen formation and fibril assembly (Reactome NES about 2.5). The stroma in these tumours is mouse, so these
     human-gene signals come from the tumour cells themselves.
 - **Lower in TNBC:**
   - luminal mammary epithelial lineage (Reactome);
-  - 17q12 copy-number region (WikiPathways NES −3.03), i.e. the ERBB2 amplicon;
+  - 17q12 copy-number region (WikiPathways NES −3.06), i.e. the ERBB2 amplicon;
   - interferon-α response;
   - insulin-secretion/secretory GO terms.
 

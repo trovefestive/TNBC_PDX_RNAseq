@@ -50,9 +50,33 @@ mat <- fread(file.path(geo_dir, "GSE183187_BCM_PDX_RNAseq_RSEM_ExpectedCounts.tx
 setnames(mat, 1, "gene")
 msg("  matrix: ", nrow(mat), " genes x ", ncol(mat) - 1, " models")
 
-# Two gene symbols appear twice: add their rows together.
+# Undo Excel's date conversion of gene names (same rules as script 14):
+#   "5-Sep" -> SEPTIN5, "3-Mar" -> MARCHF3, "1-Dec" -> DELEC1.
+# "1-Mar" and "2-Mar" are dropped: Excel turned BOTH MARCH1 and MARC1 (now MTARC1)
+# into "1-Mar" (same for 2), so those rows mix two different genes.
+# The per-sample RSEM files were never opened in Excel and use the old symbols
+# (MARCH5, SEPT5, MARC1); fix_symbols() maps those to the same current names so
+# that per-sample files and the matrix match by gene.
+fix_symbols <- function(g) {
+    g <- sub("^([0-9]+)-Sep$", "SEPTIN\\1", g)
+    g <- sub("^([0-9]+)-Mar$", "MARCHF\\1", g)
+    g <- sub("^SEPT([0-9]+)$",  "SEPTIN\\1", g)
+    g <- sub("^MARCH([0-9]+)$", "MARCHF\\1", g)
+    g <- sub("^MARC([12])$",    "MTARC\\1",  g)
+    g[g == "1-Dec"] <- "DELEC1"
+    g
+}
+ambiguous <- c("1-Mar", "2-Mar")
+msg("  dropping ambiguous Excel-mangled rows: ", paste(mat[gene %in% ambiguous, gene], collapse = ", "))
+mat <- mat[!gene %in% ambiguous]
+mangled <- grepl("^[0-9]+-(Sep|Mar|Dec)$", mat$gene)
+msg("  renaming ", sum(mangled), " Excel-mangled symbols (SEPTIN*, MARCHF*, DELEC1)")
+mat[, gene := fix_symbols(gene)]
+stopifnot(!any(grepl("^[0-9]+-[A-Z][a-z]{2}$", mat$gene)))
+
+# Any symbol still duplicated would be summed (none expected after the fix above).
 dups <- mat[duplicated(gene), unique(gene)]
-msg("  duplicated gene symbols (summed): ", paste(dups, collapse = ", "))
+msg("  duplicated gene symbols (summed): ", if (length(dups)) paste(dups, collapse = ", ") else "none")
 mat <- mat[, lapply(.SD, sum), by = gene]
 
 samples[, in_author_matrix := model %in% names(mat)]
@@ -64,6 +88,7 @@ msg("  our models in the matrix: ", sum(samples$in_author_matrix), " / 53; missi
 # =============================================================================
 read_rsem <- function(f) {
     x <- fread(f, select = c("gene_id", "expected_count"))
+    x[, gene_id := fix_symbols(gene_id)]
     x[, .(expected_count = sum(expected_count)), by = .(gene = gene_id)]
 }
 msg("Step 3: checking a per-sample file (BCM-0002) against the matrix")

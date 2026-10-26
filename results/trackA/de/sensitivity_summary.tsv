@@ -1,6 +1,6 @@
 analysis	n_TNBC	n_comparator	n_sig	overlap_with_main_sig	main_sig_same_sign_pct	spearman_log2FC_all_genes
 1. drop HiSeq2500 (~ instrument + group)	29	14	1773	1475	100	0.979
-2. no instrument covariate (~ group)	38	14	3247	1283	99.3	0.81
-3. HiSeq2000 only (~ group)	21	7	324	267	96.7	0.783
-3. NovaSeq6000 only (~ group)	8	7	1204	584	97.7	0.736
-4. include BCM-3807 (1.4 M counts)	39	14	1497	1440	100	0.988
+2. no instrument covariate (~ group)	38	14	3249	1283	99.3	0.81
+3. HiSeq2000 only (~ group)	21	7	325	268	96.7	0.783
+3. NovaSeq6000 only (~ group)	8	7	1203	583	97.7	0.736
+4. include BCM-3807 (1.4 M counts)	39	14	1498	1440	100	0.988
