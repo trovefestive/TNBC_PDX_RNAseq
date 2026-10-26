@@ -128,12 +128,12 @@ Figures are in [`results/trackA/plots/`](results/trackA/plots/) and tables in [`
 | Top genes | The 17q12 ERBB2 amplicon again (STARD3, ERBB2, ORMDL3, MIEN1, PGAP3, MED1, CDK12), plus ANKRD30A and MUC6 lower in TNBC |
 
 **Agreement with Track A.** The two tracks used different read assignment (Xenome vs a joint Salmon index) and
-different annotation (RefSeq vs GENCODE). 17,842 genes are matched by name between the two tables.
+different annotation (RefSeq vs GENCODE). 17,862 genes are matched by name between the two tables.
 
 | | |
 |---|---|
 | log2FC correlation | Pearson 0.89, Spearman 0.91 |
-| Significant-gene overlap | 72.5% of Track A DE genes are also significant in Track B. All 988 genes significant in both have the same direction. |
+| Significant-gene overlap | 72.6% of Track A DE genes are also significant in Track B. All 989 genes significant in both have the same direction. |
 | GSEA NES correlation | GO BP 0.86, Reactome 0.88, WikiPathways 0.87, Hallmark 0.97. All gene sets significant in both tracks have the same direction. |
 
 Track B reproduces the Track A pathway picture:

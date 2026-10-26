@@ -1,2 +1,2 @@
 genes_matched	sig_A	sig_B	sig_both	pct_A_sig_also_B	same_sign_among_both_pct	pearson_log2FC	spearman_log2FC
-17842	1362	1203	988	72.5	100	0.892	0.91
+17862	1363	1204	989	72.6	100	0.892	0.91
