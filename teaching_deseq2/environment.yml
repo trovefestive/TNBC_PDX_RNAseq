@@ -1,0 +1,15 @@
+# Software for the DESeq2 exercise on the cluster (see HPC_GUIDE.md).
+# Create it ONCE, inside an interactive job (not on the login node):
+#   module load miniforge
+#   conda env create -f environment.yml
+name: tnbc-deseq2
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - r-base=4.4
+  - bioconductor-deseq2
+  - bioconductor-apeglm
+  - r-ggplot2
+  - r-ggrepel
+  - r-pheatmap

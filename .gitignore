@@ -26,6 +26,8 @@
 !teaching_deseq2/README.md
 !teaching_deseq2/*.R
 !teaching_deseq2/*.Rproj
+!teaching_deseq2/*.md
+!teaching_deseq2/*.yml
 !teaching_deseq2/data/
 !teaching_deseq2/data/*
 !trackB_salmon/

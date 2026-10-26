@@ -13,6 +13,9 @@ patient's tumour grown in a mouse. The authors removed the mouse reads and count
 teaching_deseq2/
 ├── TNBC_DESeq2.Rproj            double-click (or File > Open Project) to open in RStudio
 ├── DESeq2_TNBC_vs_nonTNBC.R     the analysis, step by step, with explanations
+├── HPC_GUIDE.md                 running it on the cluster in an interactive job (terminal, no RStudio)
+├── run_section.R                helper: section(2) runs section 2 of the script in terminal R
+├── environment.yml              conda environment with R + DESeq2 for the cluster
 ├── data/
 │   ├── counts_TNBC_PDX.csv.gz   raw read counts: 25,143 genes (rows) x 52 samples (columns)
 │   └── sample_info.csv          one row per sample: group, subtype, sequencing machine
@@ -67,5 +70,7 @@ half lower in TNBC. ESR1 log2FC is about −4.2. The ERBB2 (HER2) amplicon genes
 
 ## Running on the cluster instead of a laptop
 
-The same folder works in RStudio Server (e.g. Open OnDemand) on the cluster. Open the folder there, then follow the
-steps above.
+- **Terminal + interactive job:** follow [`HPC_GUIDE.md`](HPC_GUIDE.md). It covers login vs compute nodes, `ijob`, a
+  conda environment (`environment.yml`), and running the script section by section with `run_section.R`. It also has
+  a bonus batch-job (`sbatch`) version.
+- **RStudio Server** (e.g. Open OnDemand): open this folder there, then follow the steps above.
